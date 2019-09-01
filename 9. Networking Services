@@ -138,37 +138,43 @@ TXT record - text
 NS and SOA records - define authoritive information about DNS zones;
 ---------------------------------------------------------------------------------------------------------------------------------------* Anatomy of Domain name
 ------------------------
+## ANATOMY OF DOMAIN NAME
 - 3 parts
 www.google.com
 * .com - last part - TLD - Top-level domain name; - handled by ICANN - The Internet Corporation for Assigned Names and Numbers;
 * google - Domains - Used to demarcate where control moves from TLD name server to an authoritative name server; - registered and chossen by any individuals/ companies;
 * www - subdomain / hostname;
 
-- All together - fully qualified domain name (FQDN) - 255 characters
-- DNS can technically support 127 levels of domain i total for a single fully qualified domain name -each individual sections can be - 63 characters long;
+- All together is called - fully qualified domain name (FQDN) - 255 characters
+- we can a large number of sub-domain names ex- host.sub.x.y.yaaa.com could be completely valide
+- DNS can technically support 127 levels of domain i total for a single fully qualified domain name 
+- each individual sections can be - 63 characters long;
 ---------------------------------------------------------------------------------------------------------------------------------------* DNS zones
 -------------
+## DNS ZONES
 - They are an hierarchical concept;
 - The root name servers are responsible for the root zones;
 - Each TLD name server is responsible for the zone covering its specific TLD;
 - Authoritative name servers are responsible for even fine grained zones;
-- The root and TLD name servers are authoritative name servers - zones are special case;
+- The root and TLD name servers are authoritative name servers - zones they are authoritative to are just special cases;
 - Zones don't overlap;
 
 - Allows for easier control over multiple levels of a domain;
 
 - As the number of reource records in a single domain increase its difficult to manage, network administrators can ease their pain by spliting the configurations into multiple zones;
 - Consider - largecompany.com - offices in Tokyo, Bangalore and London - with 200 members each - total of 600 Unique desktop number - 600 A records - configured in a single DNS zone;
-- If it splits up each office into its own zone - ty.largecompany.com, bl.largecompany.com, ln.largecompany.com - as subsomains with their DNS zones and total of four authoritative name servers - largecompany, ty.largecompany.com, bl.largecompany.com, and ln.largecompany.com;
+- If it splits up each office into its own zone - ty.largecompany.com, bl.largecompany.com, ln.largecompany.com - as subsomains with their DNS zones and total of four authoritative name servers - largecompany, ty.largecompany.com, bl.largecompany.com, and ln.largecompany.com would now be required to be setup-ed. 
 
 - Zones are configured through Zone files - Simple configuration files that declare all resource records for a particular zone;
 - Contains an
-   SOA - Start of Authority resource record declaration - declares the zone and the name server name that is authoritative for it;
-   NS records - Indicates - other name servers responsible for the zone;
+   SOA - Start of Authority resource record declaration - declares the zone and the name of the server name that is authoritative for it;
+   NS records - Indicates other name servers responsible for the zone;
    A
    Quad A
    CNAME
-   Configurations - Default TTL values;
+   Configurations such as Default TTL values;
+   
+- Just like subdomains, zones can be configured for many level. But in reality they are configured for only few levels
 
 -> Reverse lookup zone files - These let DNS resolvers ask for an IP and get FQNS (fully qualified domain name ) associated with it returned; - using a PTR;
 - PTR - Pointer resource record - Resolves an IP to a name;
