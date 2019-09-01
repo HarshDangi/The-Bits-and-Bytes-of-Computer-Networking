@@ -1,6 +1,6 @@
 * Dynamic Host Configuration Protocol
 ----------------------------------------
-- Every coputer on a mordern TCP/IP network needs to have 4 thing configured:
+- Every computer on a mordern TCP/IP network needs to have 4 thing configured:
 1. IP address
 2. Subnet mask for the local network
 3. Gateway
@@ -16,11 +16,11 @@
     
 * DHCP ways of operation:
 --------------------------
-1. Dynamic allocation - A range of IP addresses are set aside for client devices and one of these IPs is issued to these devices when they                         request one;  There the IP of a system can be different everytime it connects to the network;
+1. Dynamic allocation - A range of IP addresses are set aside for client devices and one of these IPs is issued to these devices when they request one;  There the IP of a system can be different everytime it connects to the network;
 
-2. Automatic allocation - A range of IP addresses are set aside for assignmnet purpose; Here the DHCP tracks the assignment numbers                                   assigned to a host device and ensures to assign the same IP to the same machine;
+2. Automatic allocation - A range of IP addresses are set aside for assignmnet purpose; Here the DHCP tracks the assignment numbers assigned to a host device and ensures to assign the same IP to the same machine;
 
-3. Fixed allocation - Requires a manually specified list of MAC address and their corresponding IPs; MAC address and IP addressing mapping                       and lookup; If the MAC address is not available the DHCP server will fall back to automatic or dynamic allocation;
+3. Fixed allocation - Requires a manually specified list of MAC address and their corresponding IPs; MAC address and IP addressing mapping and lookup; If the MAC address is not available the DHCP server will fall back to automatic or dynamic allocation;
 
 DHCP - can be used to configured a lot of things - IP Addresses, Gateways, NTP (Network time protocol), subnet networks, etc;
 - NTP - Network time protocols servers - used to keep all the computers on a network synchronized in time;
@@ -31,7 +31,7 @@ DHCP - can be used to configured a lot of things - IP Addresses, Gateways, NTP (
 -> It is an Application layer protocol - relies on the transport, network, data-link and physical layers to operate; 
 -> The DHCP is useful to configure the network layer
 
--> DHCP discovery - The process by which a client configured to use DHCP attempts to get network configuration information;
+-> DHCP discovery - The process by which a client configured to use DHCP, attempts to get network configuration information;
 - It has 4 steps:
 
 1. Server discovery step - 
@@ -45,12 +45,13 @@ DHCP - can be used to configured a lot of things - IP Addresses, Gateways, NTP (
   Then a DHCPOFFER message will be sent with a destination messgae of port 68 and source port of 67, destination broadcast ip of - 255.255.255.255 and its actual IP as the source;
   This message is also a broadcast it will be received by every machine on the network, and the original client would recognize the message was for itself. Since the DHCPOFFER has a field that specifies the MAC address of the client that sent the DHCP message;
   
-  3. The client machine will then process the DHCPOFFER message to see what IP address is being offered to it. Itwould send a DHCPREQUEST Message. (0.0.0.0 -> 255.255.255.255 - since the IPs are not assigned);
+  3. The client machine will then process the DHCPOFFER message to see what IP address is being offered to it. It would send a DHCPREQUEST Message. (0.0.0.0 -> 255.255.255.255 - since the IPs are not assigned);
   
   4. The server responds with a DHCPACK message; (The DHCP server source ip -> 255.255.255.255:68) - client recognized the message by the MAC address encapsulated in it;
   
   5. The client machines networking stack now uses the configuration information  presented to it by the DHCP server to set up its own network layer configuration; This configuration - DHCP Lease - as it includes the expiration time. It might last for days or for a short amount of time; On expiration the DHCP client needs to negotiate a new lease by performing the entire DHCP Discovery process;
   
+  A client could also release its DHCPLEASE when it wants to leave, so that the DHCP server gets to know that a particular IP address has been freed.
 ---------------------------------------------------------------------------------------------------------------------------------
 
 NAT - Network Address Translation
@@ -61,12 +62,16 @@ NAT - Network Address Translation
 - A technology that allows a gateway usually a router or a firewall to rewrite the source IP of an outgoing IP datagram while retaining the original IP in order to rewrite it into the response;
 
 NAT is hiding the source IP address and masking with its gateway or relevant IP address; This is termed as IP masquerading;
+IP masquerading - basically stops any computer from accessing your computer because it won't know what is the IP address of your computer
+
+Here, we could have hundreds of devices before router. router convertes the address of each of the nodes into address of its own. Thus, protecting this inside network from the outside network
+This, is known as One to Many NAT, it is used by lots of LANs today
 
 NAT and Transport Layer
 -------------------------
 - NAT at the network layer is easy but not so at the transport layer;
 - one ip is translated into another usually by a router;
-- many to one - > many IP address are translated into a single out bound NAT ip;
+- one to many - > many IP address are translated into a single out bound NAT ip;
 - the reverse is complicated, the router needs to figure which response correspondce to which compuer; - The simpleast way to do this is via - port preservation;
 
 * Port preservation - a technique where the source port chosen by a client is the same port used by the router; Outbound comnnections choose ports at random - from the ephemeral ports - 49152 - 65535;
@@ -106,6 +111,6 @@ Consider a company with Web server (10.1.1.5) and a Mail server (10.1.1.6) -> Th
     4. LACNIC - Central and South America, other parts of the Carribean;
     5. RIPE - Europe, Russia, Middle East and portions of Central Asia;
     
-IP address spaces are exhausting world-wide. Work arount - NAT (Network Addres Translation) and Non-routable address space;
+IP address spaces are exhausting world-wide. Work around - NAT (Network Addres Translation) and Non-routable address space;
 - RFC1918 - defined non-routable address space;
 - With one exposed address space - NAT can internally have multiple non-routable address spaces.
